@@ -1,0 +1,13 @@
+type test {
+  TEST_ID: String!
+}
+input testParam {
+  
+    TEST_ID: String!
+   
+}
+type Query {
+    # 권한 목록 조회
+    hello (param:testParam ): [test]
+}
+ 

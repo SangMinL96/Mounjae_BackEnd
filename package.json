@@ -13,6 +13,7 @@
     "dotenv": "^8.2.0",
     "graphql-tools": "^7.0.2",
     "graphql-yoga": "^1.18.3",
+    "mariadb": "^2.5.2",
     "morgan": "^1.10.0",
     "yarn": "^1.22.10"
   },

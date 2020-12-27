@@ -20,7 +20,7 @@ let mariadb = require('mariadb');
 
 console.log( process.env.DB_PORT)
 const dbConInfo = {
-    host: "192.168.56.101",
+    host: "193.123.224.133",
     port: 3306,
     user: "mounjea",
     password: "adsf153246",

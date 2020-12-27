@@ -2,7 +2,7 @@ require("dotenv").config();
 import schema from "./schema"
 import { GraphQLServer } from "graphql-yoga";
 import logger from "morgan"
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 4001;
 
 const server = new GraphQLServer({schema});
 server.express.use(logger("dev"));

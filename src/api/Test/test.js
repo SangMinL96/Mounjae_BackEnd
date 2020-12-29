@@ -1,11 +1,12 @@
-const {query} = require('../../../sql/mybatis')
+import { generateToken } from "../../passport";
+
 export default {
     Query:{
-        hello:async(_,args)=>{
+        hello:async(_,args,{request,query})=>{
            const {TEST_ID}=args.param;
-           const result =await query('test2','test1',{test:TEST_ID});
-           console.log(TEST_ID)
-           return [{TEST_ID:result[0].name}]
+          console.log(request.user,"sdfasd")
+        //   const token = generateToken("")
+           return [{TEST_ID:"token"}]
              
             }
     }

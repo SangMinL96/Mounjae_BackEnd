@@ -3,6 +3,7 @@ const poolMaria = require('../config/mariadb');
 const fs = require('fs');
 
 
+
 const files = fs.readdirSync(__dirname).filter(file => file.includes('.xml'));
 
 const paths = [];

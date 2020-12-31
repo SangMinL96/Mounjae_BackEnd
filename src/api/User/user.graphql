@@ -1,0 +1,30 @@
+type Token{
+  id:String!
+  token:String!
+}
+
+type Result {
+  rslt: String!
+  text: String!
+}
+type User {
+  TEST_ID: String!
+}
+input userLogin {
+   id: String!
+   pw: String!
+}
+
+input userSaveParam {
+   id: String!
+   pw: String!
+   name: String!
+   eml: String!
+   hp: String!
+}
+type Query {
+    user (param:userLogin ): [Token]
+}
+ type Mutation  {
+    signUpUser(param:userSaveParam ) : Result
+}

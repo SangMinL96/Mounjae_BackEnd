@@ -21,9 +21,9 @@ let mariadb = require('mariadb');
 const dbConInfo = {
     host: "193.123.224.133",
     port: 3306,
-    user: "mounjea",
+    user: "UnHa",
     password: "adsf153246",
-    database: "mounjea",
+    database: "unha",
     connectionLimit: process.env.DB_MAX
 }
 

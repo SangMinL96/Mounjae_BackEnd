@@ -16,3 +16,6 @@ server.express.use(authenticateJwt);
 server.start({ port: PORT }, () =>
   console.log(`Server running on  http://localhost:${PORT}`)
 );
+
+
+// $env:NODE_ENV="dev"; yarn dev

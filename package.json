@@ -10,6 +10,7 @@
     "@babel/node": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
     "add": "^2.0.6",
+    "crypto": "^1.0.1",
     "dotenv": "^8.2.0",
     "graphql-tools": "^7.0.2",
     "graphql-yoga": "^1.18.3",

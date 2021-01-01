@@ -4,11 +4,11 @@ const crypto = require('crypto')
 export default {
     Mutation:{
         signUpUser:async(_,args,{request,query})=>{
-            console.log("sdafsad")
+           
             try{
                 const param=args.param;
                 console.log(param)
-                let pwHash =await upgradeBase64crypto(param.pw)
+                let pwHash =await crypto.createHash('sha512').update(param.id + param.pw+process.env.KEY).digest('hex')
                 const result =await query('user','signUser',{...param,pw:pwHash});
                 console.log(result)
                 if(!result){
@@ -18,9 +18,8 @@ export default {
                 }
                
             }catch(err){
-
-            }
-            return {rslt: 'NG', text:"SQL_NG"}  
+                   
+            } 
             }
     }
 }

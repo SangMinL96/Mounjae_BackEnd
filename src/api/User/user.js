@@ -1,15 +1,26 @@
+import { upgradeBase64crypto } from "../../../utils/pwCrypto";
 import { generateToken } from "../../passport";
+const crypto = require('crypto')
 
 export default {
-    Query:{
+    Mutation:{
         user:async(_,args,{request,query})=>{
-           const param=args.param;
-           const result =await query('user','login',param);
-        
-          const token = generateToken(request.id)
+            try{
+                const param=args.param;
+            
+                let pwHash =await crypto.createHash('sha512').update(param.id + param.pw+process.env.KEY).digest('hex')
+                const result =await query('user','login',{id:param.id,pw:pwHash});
+               
+                if(!result[0]){
+                    return {id:"null",token:""}
+                }else{
+                    const token = generateToken(result[0].id)
+                    return {id:result[0].id,name:result[0].name,token:token}
+                }
+            }catch(err){
 
-
-           return [{id:"id",token:token}]
+            }
+         
              
             }
     }

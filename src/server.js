@@ -11,6 +11,15 @@ const PORT = process.env.PORT||4000;
 const server = new GraphQLServer({schema,context: ({ request }) => ({ request,query })});
 
 
+export const isTokenCheck = (request)=>{
+  console.log("dsfas")
+  server.express.use(function(err, req, res, next) {
+    console.error(err.stack);
+    res.status(401).send('Something broke!');
+  });
+ 
+  }
+  
 server.express.use(logger("dev"));
 server.express.use(authenticateJwt);
 server.start({ port: PORT }, () =>

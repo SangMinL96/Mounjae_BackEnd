@@ -3,6 +3,19 @@
 <mapper namespace="user">  
   
   <select id="login">
+    SELECT
+       u.id,
+       u.name
+      FROM
+      unha.User u
+      WHERE
+     <if test="id != null and id !=''">
+       u.id = #{id}
+    </if>
+      AND
+     <if test="pw != null and pw !=''">
+       u.pw = #{pw}
+    </if>
   </select>
   <update id="signUser">
     INSERT INTO unha.User (
@@ -30,4 +43,24 @@
       </if>
   </update>
 
+   <select id="idCheck">
+     SELECT
+       u.id
+      FROM
+      unha.User u
+      WHERE
+     <if test="id != null and id !=''">
+       u.id = #{id}
+    </if>
+  </select>
+     <select id="nameCheck">
+     SELECT
+       u.name
+      FROM
+      unha.User u
+      WHERE
+     <if test="name != null and name !=''">
+       u.name= #{name}
+    </if>
+  </select>
 </mapper>

@@ -1,5 +1,6 @@
 type Token{
   id:String!
+  name:String!
   token:String!
 }
 
@@ -23,8 +24,18 @@ input userSaveParam {
    hp: String!
 }
 type Query {
-    user (param:userLogin ): [Token]
+    test (param:userLogin ): Token
+}
+type Mutation {
+    user (param:userLogin ): Token
 }
  type Mutation  {
     signUpUser(param:userSaveParam ) : Result
+}
+
+type Mutation {
+    idCheck (id:String!): Result
+}
+type Mutation {
+    nameCheck (name:String!): Result
 }

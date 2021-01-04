@@ -7,7 +7,7 @@
        u.id,
        u.name
       FROM
-      unha.User u
+      helympic.User u
       WHERE
      <if test="id != null and id !=''">
        u.id = #{id}
@@ -18,7 +18,7 @@
     </if>
   </select>
   <update id="signUser">
-    INSERT INTO unha.User (
+    INSERT INTO helympic.User (
       id,
       pw, 
       name,
@@ -47,7 +47,7 @@
      SELECT
        u.id
       FROM
-      unha.User u
+      helympic.User u
       WHERE
      <if test="id != null and id !=''">
        u.id = #{id}
@@ -57,7 +57,7 @@
      SELECT
        u.name
       FROM
-      unha.User u
+      helympic.User u
       WHERE
      <if test="name != null and name !=''">
        u.name= #{name}

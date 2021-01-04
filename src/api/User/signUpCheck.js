@@ -27,10 +27,8 @@ export default {
                 const result =await query('user','nameCheck',{name:param});
                 console.log(result[0])
                 if(!result[0]){
-                    console.log("중복아님")
                     return {rslt: 'OK', text:"SQL_OK"} 
                 }else{
-                    console.log("중복")
                     return {rslt: 'NG', text:"SQL_NG"}
                 }              
                 }catch(err){

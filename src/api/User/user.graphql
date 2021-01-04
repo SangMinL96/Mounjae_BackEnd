@@ -4,6 +4,8 @@ type Token{
   token:String!
 }
 
+
+
 type Result {
   rslt: String!
   text: String!
@@ -11,6 +13,9 @@ type Result {
 type User {
   TEST_ID: String!
 }
+
+
+#################################################
 input userLogin {
    id: String!
    pw: String!
@@ -23,11 +28,18 @@ input userSaveParam {
    eml: String!
    hp: String!
 }
+
+
+#################################################
 type Query {
     test (param:userLogin ): Token
 }
 type Mutation {
     user (param:userLogin ): Token
+}
+
+type Mutation {
+    getToken (id:String! ): String!
 }
  type Mutation  {
     signUpUser(param:userSaveParam ) : Result

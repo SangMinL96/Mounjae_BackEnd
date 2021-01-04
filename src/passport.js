@@ -10,7 +10,7 @@ const jwtOptions = {
 
 const verifyUser = async (payload, done) => {
   try {
-  console.log(payload)
+  
     if (payload !== null) {
       return done(null, payload);
     } else {
@@ -20,10 +20,16 @@ const verifyUser = async (payload, done) => {
     return done(error, false);
   }
 };
-export const generateToken = id => jwt.sign({ id }, process.env.JWT_SECRET);
+export const generateToken = id => jwt.sign({ id }, process.env.JWT_SECRET,{expiresIn:"1m"});
 export const authenticateJwt = (req, res, next) =>
-  passport.authenticate("jwt", { sessions: false }, (error, user) => {
-    console.log(user)
+  passport.authenticate("jwt", { sessions: false,failureMessage:true }, (err, user,info) => {
+    console.log("유저",user)
+
+    if(info?.expiredAt !==undefined){
+      return res.status(401).json({
+          message: 'Login is needed'
+        });
+    }
     if (user) {
       req.user = user;
     }

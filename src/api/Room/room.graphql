@@ -1,0 +1,23 @@
+type Result{
+ rslt: String!
+}
+
+
+
+#################################################
+
+
+# input userSaveParam {
+#    id: String!
+#    pw: String!
+#    name: String!
+#    eml: String!
+#    hp: String!
+# }
+
+
+#################################################
+type Mutation {
+    room (test: String! ): Result
+}
+

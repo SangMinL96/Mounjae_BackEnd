@@ -21,15 +21,7 @@ export default {
 
             }
          },
-         getToken:async(_,args,{request,query})=>{
-            try{
-                const param=args.param;
-                const token = generateToken(param.id)
-                return token                
-            }catch(err){
-
-            }
-         }
+      
 
     }
 }

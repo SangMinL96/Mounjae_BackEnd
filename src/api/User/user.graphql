@@ -38,9 +38,7 @@ type Mutation {
     user (param:userLogin ): Token
 }
 
-type Mutation {
-    getToken (id:String! ): String!
-}
+
  type Mutation  {
     signUpUser(param:userSaveParam ) : Result
 }

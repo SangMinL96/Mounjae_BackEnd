@@ -1,23 +1,31 @@
-type Result{
- rslt: String!
+type Room {
+  id:Int!
+  title:String!
+  desc1:String
+  master_id:String!
+  hash_tag:String
 }
-
-
+type Result {
+  rslt: String!
+  text: String!
+}
 
 #################################################
 
 
-# input userSaveParam {
-#    id: String!
-#    pw: String!
-#    name: String!
-#    eml: String!
-#    hp: String!
-# }
+input roomSaveParams {
+   masterid:String!
+   title: String!
+   desc: String
+   tag: String
+}
 
 
 #################################################
 type Mutation {
-    room (test: String! ): Result
+    saveRoom (param: roomSaveParams ): Result
 }
 
+type Query {
+    getRoomList:[Room]
+}

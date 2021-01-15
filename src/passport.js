@@ -20,12 +20,12 @@ const verifyUser = async (payload, done) => {
     return done(error, false);
   }
 };
-export const generateToken = id => jwt.sign({ id }, process.env.JWT_SECRET,{expiresIn:"1m"});
+export const generateToken = id => jwt.sign({ id }, process.env.JWT_SECRET,{expiresIn:"15m"});
 export const authenticateJwt = (req, res, next) =>
   passport.authenticate("jwt", { sessions: false,failureMessage:true }, (err, user,info) => {
-    console.log("유저",user)
+    // console.log("유저",user)
 
-    if(info?.expiredAt !==undefined){
+    if(info?.name ==="TokenExpiredError" || info?.name === "JsonWebTokenError"){
       return res.status(401).json({
           message: 'Login is needed'
         });

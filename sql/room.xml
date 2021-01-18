@@ -2,17 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="room">  
  <select id="getRoom">
-    SELECT
-      *
+   SELECT
+      u.name,
+       r.title,
+      r.id,
+      r.desc1,
+      r.master_id,
+      r.hash_tag,
+      (SELECT COUNT(*) FROM helympic.Room_User WHERE room_id = r.id) uCount,
+      DATE_FORMAT(r.rDate, '%Y-%m-%d') rDate
       FROM
-      helympic.Room
+      helympic.Room r
+      LEFT JOIN 
+      helympic.User u
+      ON 
+      r.master_id = u.id
   </select>
+ 
  <update id="saveRoom">
     INSERT INTO helympic.Room (
       title,
       desc1, 
       master_id,
-      hash_tag
+       <if test="tag != null">
+     hash_tag
+      </if>
+     
     ) VALUES (
      <if test="title != null and title !=''">
       #{title},
@@ -25,6 +40,19 @@
       </if>
        <if test="tag != null ">
       #{tag}
+      </if>
+    )
+  </update>
+  <update id="saveRoomUser">
+    INSERT INTO helympic.Room_User (
+      room_id,
+      user_id
+    ) VALUES (
+     <if test="roomId != null and roomId !=''">
+      #{roomId},
+      </if>
+       <if test="userId != null and userId !='' ">
+      #{userId}
       </if>
     )
   </update>

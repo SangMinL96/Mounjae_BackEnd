@@ -1,9 +1,14 @@
+scalar DateTime
 type Room {
   id:Int!
   title:String!
   desc1:String
   master_id:String!
+  name:String!
+  rDate:DateTime
   hash_tag:String
+  uCount:Int
+  
 }
 type Result {
   rslt: String!
@@ -28,4 +33,7 @@ type Mutation {
 
 type Query {
     getRoomList:[Room]
+}
+type Query {
+    roomUserCount:String!
 }

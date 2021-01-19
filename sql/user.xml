@@ -17,6 +17,19 @@
        u.pw = #{pw}
     </if>
   </select>
+  <select id="userInfo">
+    SELECT
+       u.id,
+       u.name,
+       u.eml,
+       u.hp
+      FROM
+      helympic.User u
+      WHERE
+     <if test="id != null and id !=''">
+       u.id = #{id}
+    </if>
+  </select>
   <update id="signUser">
     INSERT INTO helympic.User (
       id,

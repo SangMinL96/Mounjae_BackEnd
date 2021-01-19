@@ -8,6 +8,17 @@ import { authenticateJwt, generateToken } from "./passport";
 const {query} = require('../sql/mybatis')
 const PORT = process.env.PORT||4000;
 const server = new GraphQLServer({schema,context: ({ request }) => ({ request,query })});
+const multer  = require('multer')
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, '../Helympic_Front/data/avatar/') // cb 콜백함수를 통해 전송된 파일 저장 디렉토리 설정
+  },
+  filename: function (req, file, cb) {
+    console.log(file)
+    cb(null, file.originalname+".jpg") // cb 콜백함수를 통해 전송된 파일 이름 설정
+  }
+})
+var upload = multer({ storage: storage })
 
 
 
@@ -28,6 +39,12 @@ server.express.get('/getToken', async ( req, res ) => {
   }catch(err){
 
   }
+  
 
 });
+server.express.post('/upload',upload.single('photo'),({ req, res, next }) => {
+   console.log(req)
+   console.log(next)
+  }
+);
 // $env:NODE_ENV="dev"; yarn dev

@@ -6,18 +6,16 @@ export default {
         idCheck:async(_,args,{request,query})=>{
             try{
                 const param=args.id;
-                console.log(param)
                 const result =await query('user','idCheck',{id:param});
-                console.log(result)
                 if(!result[0]){
                     console.log("중복아님")
-                    return {rslt: 'OK', text:"SQL_OK"} 
+                    return {rslt: 'OK', data:""} 
                 }else{
                     console.log("중복")
-                    return {rslt: 'NG', text:"SQL_NG"}
+                    return {rslt: 'NG', data:""}
                 }              
                 }catch(err){
-                    return {rslt: 'NG', text:"CATCH_ERR"} 
+                    return {rslt: 'NG', data:""} 
                 }
             },
         nameCheck:async(_,args,{request,query})=>{
@@ -27,12 +25,12 @@ export default {
                 const result =await query('user','nameCheck',{name:param});
                 console.log(result[0])
                 if(!result[0]){
-                    return {rslt: 'OK', text:"SQL_OK"} 
+                    return {rslt: 'OK', data:""} 
                 }else{
-                    return {rslt: 'NG', text:"SQL_NG"}
+                    return {rslt: 'NG', data:""}
                 }              
                 }catch(err){
-                    return {rslt: 'NG', text:"CATCH_ERR"} 
+                    return {rslt: 'NG', data:""} 
                 }
             }
     }

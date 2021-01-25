@@ -1,0 +1,20 @@
+scalar DateTime
+type Room {
+  id:Int!
+  title:String!
+  desc1:String
+  master_id:String!
+  name:String!
+  avatar:String
+  rDate:DateTime
+  hash_tag:String
+  uCount:Int
+  age:String
+}
+
+
+
+#################################################
+type Mutation {
+    searchRoomList(text:String):[Room]
+}

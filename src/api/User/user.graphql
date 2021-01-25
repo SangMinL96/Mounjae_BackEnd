@@ -1,3 +1,4 @@
+scalar Date
 type Token{
   id:String!
   name:String!
@@ -7,13 +8,13 @@ type userInfo{
   id:String!
   name:String!
   eml:String!
-  hp:String!
+  age:Date!
 }
 
 
 type Result {
   rslt: String!
-  text: String!
+  data: String!
 }
 
 #################################################
@@ -27,7 +28,7 @@ input userSaveParam {
    pw: String!
    name: String!
    eml: String!
-   hp: String!
+   age:Date!
 }
 
 
@@ -38,15 +39,15 @@ type Query {
 type Mutation {
     user (param:userLogin ): Token
 }
-
-
- type Mutation  {
+type Mutation  {
     signUpUser(param:userSaveParam ) : Result
 }
-
 type Mutation {
     idCheck (id:String!): Result
 }
 type Mutation {
     nameCheck (name:String!): Result
+}
+type Mutation {
+    userNameEdit (name:String): Result
 }

@@ -5,35 +5,49 @@ type Room {
   desc1:String
   master_id:String!
   name:String!
+  avatar:String
   rDate:DateTime
   hash_tag:String
   uCount:Int
-  
+  age:String
 }
 type Result {
   rslt: String!
-  text: String!
+  data: String
 }
 
 #################################################
 
 
 input roomSaveParams {
-   masterid:String!
+   avatar:String!
    title: String!
    desc: String
    tag: String
 }
 
 
-#################################################
-type Mutation {
-    saveRoom (param: roomSaveParams ): Result
-}
 
+#################################################
 type Query {
     getRoomList:[Room]
 }
 type Query {
+    getMyRoomList:[Room]
+}
+type Query {
+    getRoomAge(id:Int): Result
+}
+type Query {
     roomUserCount:String!
+}
+type Query {
+    signRoomCheck(roomId:Int! ):Result!
+}
+##################################################
+type Mutation {
+    saveRoom (param: roomSaveParams ): Result
+}
+type Mutation {
+    signRoom (roomId:Int! ): Result
 }

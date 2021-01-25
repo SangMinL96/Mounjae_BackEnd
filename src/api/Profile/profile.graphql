@@ -1,0 +1,15 @@
+scalar DateTime
+type User {
+  id:String!
+  name:String!
+  eml:String
+  avatar:String
+  rDate:DateTime
+  age:String
+}
+
+
+#################################################
+type Query {
+    getProfile:[User]
+}

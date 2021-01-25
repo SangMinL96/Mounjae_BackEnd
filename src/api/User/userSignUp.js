@@ -12,9 +12,9 @@ export default {
                 const result =await query('user','signUser',{...param,pw:pwHash});
                 console.log(result)
                 if(!result){
-                    return {rslt: 'NG', text:"SQL_NG"}
+                    return {rslt: 'NG', data:""}
                 }else{
-                    return {rslt: 'OK', text:"SQL_OK"} 
+                    return {rslt: 'OK', data:""} 
                 }
                
             }catch(err){

@@ -4,19 +4,59 @@
  <select id="getRoom">
    SELECT
       u.name,
-       r.title,
+      r.title,
       r.id,
       r.desc1,
       r.master_id,
       r.hash_tag,
       (SELECT COUNT(*) FROM helympic.Room_User WHERE room_id = r.id) uCount,
-      DATE_FORMAT(r.rDate, '%Y-%m-%d') rDate
+      DATE_FORMAT(r.rDate, '%Y-%m-%d') rDate,
+      r.avatar
       FROM
       helympic.Room r
       LEFT JOIN 
       helympic.User u
       ON 
       r.master_id = u.id
+  </select>
+  <select id="getMyRoom">
+   SELECT
+      u.name,
+      r.title,
+      r.id,
+      r.desc1,
+      r.master_id,
+      r.hash_tag,
+      (SELECT COUNT(*) FROM helympic.Room_User WHERE room_id = r.id) uCount,
+      DATE_FORMAT(r.rDate, '%Y-%m-%d') rDate,
+      r.avatar
+      FROM
+      helympic.Room r
+      LEFT JOIN 
+      helympic.User u
+      ON 
+      r.master_id = u.id
+      where
+      u.id = #{userId}
+  </select>
+  <select id="getRoomAge">
+  SELECT
+    DATE_FORMAT(NOW(), '%Y')- DATE_FORMAT(u.age, '%Y') +1 AS age
+    FROM
+    Room_User ru
+    LEFT JOIN 
+    User u
+    ON
+    ru.user_id = u.id
+    LEFT JOIN 
+    Room r
+    ON
+    ru.room_id = r.id
+    WHERE
+     <if test="id != null and id !=''">
+       r.id = #{id}
+      </if>
+   
   </select>
  
  <update id="saveRoom">
@@ -25,9 +65,10 @@
       desc1, 
       master_id,
        <if test="tag != null">
-     hash_tag
+     hash_tag,
       </if>
-     
+      avatar,
+      rDate
     ) VALUES (
      <if test="title != null and title !=''">
       #{title},
@@ -39,22 +80,67 @@
       #{masterid},
       </if>
        <if test="tag != null ">
-      #{tag}
+      #{tag},
       </if>
+       <if test="avatar != null and avatar !=''">
+      #{avatar},
+      </if>
+      now()
     )
   </update>
   <update id="saveRoomUser">
     INSERT INTO helympic.Room_User (
       room_id,
-      user_id
+      user_id,
+      rDate
     ) VALUES (
      <if test="roomId != null and roomId !=''">
       #{roomId},
       </if>
        <if test="userId != null and userId !='' ">
-      #{userId}
+      #{userId},
       </if>
+      now()
     )
   </update>
-
+  <update id="signRoom">
+    INSERT INTO helympic.Room_SignUp (
+      room_id,
+      sign_id,
+      rDate
+    ) VALUES (
+     <if test="roomId != null and roomId !=''">
+      #{roomId},
+      </if>
+       <if test="userId != null and userId !='' ">
+      #{userId},
+      </if>
+      now()
+    )
+  </update>
+  <select id="signRoomCheck">
+   SELECT
+       CASE
+         WHEN ru.user_id =  #{userId} and ru.room_id = #{roomId}
+         THEN 1
+         ELSE 0
+       END as userid,
+          CASE
+         WHEN rs.sign_id =  #{userId} and rs.room_id = #{roomId}
+         THEN 1
+         ELSE 0
+       END as signid
+      FROM
+      Room_User ru
+      LEFT JOIN 
+      Room_SignUp rs
+      ON
+      ru.room_id = rs.room_id
+      where
+      ru.room_id =  #{roomId}
+      and
+      ru.user_id = #{userId} OR rs.sign_id =#{userId}
+      LIMIT 1
+    
+    </select>
 </mapper>

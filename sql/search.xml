@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="search">  
+ <select id="searchRoom">
+   SELECT
+      u.name,
+      r.title,
+      r.id,
+      r.desc1,
+      r.master_id,
+      r.hash_tag,
+      (SELECT COUNT(*) FROM helympic.Room_User WHERE room_id = r.id) uCount,
+      DATE_FORMAT(r.rDate, '%Y-%m-%d') rDate,
+      r.avatar
+      FROM
+      helympic.Room r
+      LEFT JOIN 
+      helympic.User u
+      ON 
+      r.master_id = u.id
+      WHERE
+      r.title like #{text} or r.hash_tag like #{text} or u.name like #{text}
+  </select>
+</mapper>

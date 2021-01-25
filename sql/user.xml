@@ -22,7 +22,7 @@
        u.id,
        u.name,
        u.eml,
-       u.hp
+         DATE_FORMAT(u.age, '%Y-%m-%d') age
       FROM
       helympic.User u
       WHERE
@@ -36,7 +36,8 @@
       pw, 
       name,
       eml,
-      hp
+      age,
+      rDate
     ) VALUES (
      <if test="id != null and id !=''">
       #{id},
@@ -50,10 +51,11 @@
        <if test="eml != null ">
       #{eml},
       </if>
-       <if test="hp != null ">
-      #{hp}
-      )
+       <if test="age != null ">
+      #{age},
       </if>
+      now()
+      )
   </update>
 
    <select id="idCheck">
@@ -76,4 +78,12 @@
        u.name= #{name}
     </if>
   </select>
+  <update id="userNameEdit">
+    UPDATE 
+    User SET 
+    name=#{name},
+    eDate=now() 
+    WHERE 
+    id=#{userId}
+  </update>
 </mapper>

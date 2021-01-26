@@ -34,6 +34,18 @@ export default {
           return {rslt: 'OK', data:""}
         }
       } catch (err) {}
+    },
+    userAvatarEdit: async (_, args, { request, query }) => {
+      try {
+        const avatar = args.avatar;
+        const result = await query('user', 'userAvatarEdit', {userId:request.user.id, avatar });
+        console.log(result)
+        if (!result) {
+          return {rslt: 'NG', data:""}
+        } else {
+          return {rslt: 'OK', data:""}
+        }
+      } catch (err) {}
     }
   },
   Query: {

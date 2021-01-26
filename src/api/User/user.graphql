@@ -51,3 +51,6 @@ type Mutation {
 type Mutation {
     userNameEdit (name:String): Result
 }
+type Mutation {
+    userAvatarEdit (avatar:String): Result
+}

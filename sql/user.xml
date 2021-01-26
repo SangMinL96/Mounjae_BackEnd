@@ -86,4 +86,12 @@
     WHERE 
     id=#{userId}
   </update>
+   <update id="userAvatarEdit">
+    UPDATE 
+    User SET 
+    avatar=#{avatar},
+    eDate=now() 
+    WHERE 
+    id=#{userId}
+  </update>
 </mapper>

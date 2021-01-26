@@ -32,9 +32,7 @@ input roomSaveParams {
 type Query {
     getRoomList:[Room]
 }
-type Query {
-    getMyRoomList:[Room]
-}
+
 type Query {
     getRoomAge(id:Int): Result
 }
@@ -50,4 +48,7 @@ type Mutation {
 }
 type Mutation {
     signRoom (roomId:Int! ): Result
+}
+type Mutation {
+    getMyRoomList:[Room]
 }

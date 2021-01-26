@@ -18,7 +18,20 @@ export default {
         // console.log(err)
       }
     },
-  
+    getMyRoomList: async (_, args, { request, query }) => {
+      try {
+        console.log(request.user.id)
+        const result = await query("room", "getMyRoom", {userId:request.user.id});
+        console.log(result)
+        if (!result[0]) {
+          return null;
+        } else {
+          return result;
+        }
+      } catch (err) {
+        // console.log(err)
+      }
+    },
   },
   Query: {
     getRoomList: async (_, args, { request, query }) => {
@@ -33,19 +46,7 @@ export default {
         // console.log(err)
       }
     },
-    getMyRoomList: async (_, args, { request, query }) => {
-      try {
-        const result = await query("room", "getMyRoom", {userId:request.user.id});
-        console.log(result)
-        if (!result[0]) {
-          return null;
-        } else {
-          return result;
-        }
-      } catch (err) {
-        // console.log(err)
-      }
-    },
+  
     getRoomAge: async (_, args, { request, query }) => {
       try {
         const id = args.id;

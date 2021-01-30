@@ -22,7 +22,7 @@ export default {
       try {
         console.log(request.user.id)
         const result = await query("room", "getMyRoom", {userId:request.user.id});
-        console.log(result)
+       
         if (!result[0]) {
           return null;
         } else {

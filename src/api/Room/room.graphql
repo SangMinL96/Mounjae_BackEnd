@@ -15,7 +15,13 @@ type Result {
   rslt: String!
   data: String
 }
-
+type RoomVideo {
+    name:String
+    id:String
+    avatar:String
+    video:String
+}
+ 
 #################################################
 
 
@@ -25,7 +31,10 @@ input roomSaveParams {
    desc: String
    tag: String
 }
-
+input saveRoomVideoParams {
+   roomId:Int
+   video: String
+}
 
 
 #################################################
@@ -42,6 +51,9 @@ type Query {
 type Query {
     signRoomCheck(roomId:Int! ):Result!
 }
+type Query {
+    getRoomVideo(roomId:Int!):[RoomVideo]
+}
 ##################################################
 type Mutation {
     saveRoom (param: roomSaveParams ): Result
@@ -51,4 +63,11 @@ type Mutation {
 }
 type Mutation {
     getMyRoomList:[Room]
+}
+type Mutation {
+    signDel(roomId:Int!):Result
+}
+
+type Mutation {
+    saveRoomVideo(param:saveRoomVideoParams):Result
 }

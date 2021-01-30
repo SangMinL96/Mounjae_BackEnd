@@ -120,16 +120,7 @@
   </update>
   <select id="signRoomCheck">
    SELECT
-       CASE
-         WHEN ru.user_id =  #{userId} and ru.room_id = #{roomId}
-         THEN 1
-         ELSE 0
-       END as userid,
-          CASE
-         WHEN rs.sign_id =  #{userId} and rs.room_id = #{roomId}
-         THEN 1
-         ELSE 0
-       END as signid
+        rs.sign_id
       FROM
       Room_User ru
       LEFT JOIN 
@@ -139,8 +130,57 @@
       where
       ru.room_id =  #{roomId}
       and
-      ru.user_id = #{userId} OR rs.sign_id =#{userId}
-      LIMIT 1
-    
+      rs.sign_id = #{userId}
     </select>
+    <select id="RoomJoinCheck">
+    SELECT
+        ru.user_id
+        FROM
+        Room_User ru
+        LEFT JOIN 
+        Room_SignUp rs
+        ON
+        ru.room_id = rs.room_id
+        where
+        ru.room_id =  #{roomId}
+        and
+        ru.user_id = #{userId}
+    </select>
+     <delete id="signDel">
+       delete
+        FROM
+        Room_SignUp
+        where
+        room_id = #{roomId}
+        and
+        sign_id = #{userId}
+     </delete>
+     <update id="saveRoomVideo">
+    INSERT INTO helympic.Room_Video (
+      room_id,
+      user_id,
+      video,
+      rDate
+    ) VALUES (
+      #{roomId},
+      #{userId},
+      #{video},
+      now()
+    )
+  </update>
+  <select id="getRoomVideo">
+   SELECT 
+    u.name,
+    u.id,
+    u.avatar,
+    rv.video
+    FROM 
+    helympic.User u
+    LEFT JOIN
+    helympic.Room_Video rv
+    ON
+    u.id = rv.user_id
+    WHERE
+    rv.room_id = #{roomId}
+  </select>
 </mapper>

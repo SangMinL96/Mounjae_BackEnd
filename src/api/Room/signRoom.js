@@ -14,6 +14,19 @@ export default {
         // console.log(err)
       }
     },
+    signDel: async (_, args, { request, query }) => {
+      try {
+        const { roomId } = args;
+        const result = await query('room', 'signDel', { roomId, userId: request.user.id });
+        if (!result) {
+          return { rslt: 'NG', data: '' };
+        } else {
+          return { rslt: 'OK', data: '' };
+        }
+      } catch (err) {
+        // console.log(err)
+      }
+    },
     
   },
   Query:{
@@ -21,17 +34,16 @@ export default {
         try {
           const { roomId } = args;
           const result = await query('room', 'signRoomCheck', { roomId, userId: request.user.id });
-          if (result) {
-              console.log(result[0])
-            if (result[0]?.userid == 1) {
+          console.log(result)
+          if (result[0]?.sign_id) {
+            return { rslt: '2', data: '' };
+          }else{
+            const result = await query('room', 'RoomJoinCheck', { roomId, userId: request.user.id });
+            if (result[0]?.user_id) {
               return { rslt: '1', data: '' };
-            } else if (result[0]?.signid == 1) {
-              return { rslt: '2', data: '' };
-            } else {
+            }else{
               return { rslt: '3', data: '' };
             }
-          } else {
-            return { rslt: 'NG', data: '' };
           }
         } catch (err) {
           console.log(err);

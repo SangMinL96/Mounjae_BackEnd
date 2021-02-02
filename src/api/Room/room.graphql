@@ -1,73 +1,121 @@
 scalar DateTime
 type Room {
-  id:Int!
-  title:String!
-  desc1:String
-  master_id:String!
-  name:String!
-  avatar:String
-  rDate:DateTime
-  hash_tag:String
-  uCount:Int
-  age:String
+  id: Int!
+  title: String!
+  desc1: String
+  master_id: String!
+  name: String!
+  avatar: String
+  rDate: DateTime
+  hash_tag: String
+  uCount: Int
+  age: String
+}
+type RoomMyVideo {
+  title: String
+  avatar: String
+  video: String
+  rDate: DateTime
+  vCount: Int
+}
+type RoomSign {
+  id: String!
+  name: String!
+  avatar: String
+  age: String
 }
 type Result {
   rslt: String!
   data: String
 }
 type RoomVideo {
-    name:String
-    id:String
-    avatar:String
-    video:String
+  name: String
+  id: String
+  avatar: String
+  video: String
+  vCount: Int
+  videoId: Int
+  checked: Int
 }
- 
-#################################################
 
+#################################################
 
 input roomSaveParams {
-   avatar:String!
-   title: String!
-   desc: String
-   tag: String
+  avatar: String!
+  title: String!
+  desc: String
+  tag: String
 }
 input saveRoomVideoParams {
-   roomId:Int
-   video: String
+  roomId: Int
+  video: String
 }
-
+input saveRoomInfoParams {
+  roomId: Int
+  title: String
+  desc1: String
+  hash_tag: String
+}
 
 #################################################
 type Query {
-    getRoomList:[Room]
+  getRoomList(type:String): [Room]
+}
+type Query {
+  roomMasterCheck(roomId: Int): Result
 }
 
 type Query {
-    getRoomAge(id:Int): Result
+  getRoomAge(id: Int): Result
 }
 type Query {
-    roomUserCount:String!
+  roomUserCount: String!
 }
 type Query {
-    signRoomCheck(roomId:Int! ):Result!
+  signRoomCheck(roomId: Int!): Result!
 }
 type Query {
-    getRoomVideo(roomId:Int!):[RoomVideo]
+  getRoomVideo(roomId: Int!): [RoomVideo]
+}
+type Query {
+  getRecordVideo(roomId: Int!): [RoomVideo]
+}
+type Query {
+  getPopVideo: [RoomVideo]
+}
+type Query {
+  getMyVideo: [RoomMyVideo]
+}
+type Query {
+  getRoomInfo(roomId: Int!): [Room]
+}
+
+type Query {
+  getSignRoom(roomId: Int): [RoomSign]
 }
 ##################################################
 type Mutation {
-    saveRoom (param: roomSaveParams ): Result
+  saveRoom(param: roomSaveParams): Result
 }
 type Mutation {
-    signRoom (roomId:Int! ): Result
+  signRoom(roomId: Int!): Result
 }
 type Mutation {
-    getMyRoomList:[Room]
+  getMyRoomList: [Room]
 }
 type Mutation {
-    signDel(roomId:Int!):Result
+  signDel(roomId: Int!): Result
 }
 
 type Mutation {
-    saveRoomVideo(param:saveRoomVideoParams):Result
+  saveRoomVideo(param: saveRoomVideoParams): Result
+}
+type Mutation {
+  roomInfoEdit(param: saveRoomInfoParams): Result
+}
+type Mutation {
+  editRoomAvatar(roomId: Int, avatar: String): Result
+}
+type Mutation {
+  saveSignRoom(roomId: Int, userId: String): Result
 }

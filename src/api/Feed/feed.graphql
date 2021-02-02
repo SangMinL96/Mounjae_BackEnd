@@ -1,0 +1,11 @@
+type Result {
+  rslt: String!
+  data: String
+}
+
+
+
+##########################################
+type Mutation {
+    saveLike (type:String,videoId:Int): Result
+}

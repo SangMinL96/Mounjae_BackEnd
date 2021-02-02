@@ -16,11 +16,11 @@ export default {
       }
     },
     Query: {
-        getRoomVideo: async (_, args, { request, query }) => {
+        getPopVideo: async (_, args, { request, query }) => {
           try {
             const roomId = args.roomId;
-            const result = await query("room", "getRoomVideo", {roomId});
-            console.log(result)
+            const result = await query("room", "getRoomVideo", {roomId, userId: request.user.id});
+         
             if (!result[0]) {
               return null;
             } else {
@@ -29,7 +29,45 @@ export default {
           } catch (err) {
             // console.log(err)
           }
-        }
+        },
+        getRecordVideo: async (_, args, { request, query }) => {
+          try {
+            const roomId = args.roomId;
+            const result = await query("room", "getRecordVideo", {roomId, userId: request.user.id});
+            if (!result[0]) {
+              return null;
+            } else {
+              return result;
+            }
+          } catch (err) {
+            // console.log(err)
+          }
+        },
+        getMyVideo: async (_, args, { request, query }) => {
+          try {
+            const result = await query("room", "getMyVideo", {userId: request.user.id});
+            if (!result[0]) {
+              return null;
+            } else {
+              return result;
+            }
+          } catch (err) {
+            // console.log(err)
+          }
+        },
+        getPopVideo: async (_, args, { request, query }) => {
+          try {
+            const result = await query("room", "getPopVideo", {userId: request.user.id});
+         console.log(result)
+            if (!result[0]) {
+              return null;
+            } else {
+              return result;
+            }
+          } catch (err) {
+            // console.log(err)
+          }
+        },
     }
   };
   

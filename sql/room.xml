@@ -18,6 +18,47 @@
       helympic.User u
       ON 
       r.master_id = u.id
+      <if test="type == '1'">
+     order by rDate desc
+      </if>
+      <if test="type == '2'">
+     order by rDate asc
+      </if>
+        <if test="type == '3'">
+     order by uCount desc
+      </if>
+      <if test="type == '4'">
+     order by uCount asc
+      </if>
+  </select>
+   <select id="roomMasterCheck">
+   SELECT
+      r.master_id
+      FROM
+      helympic.Room r
+      where
+      r.id = #{roomId}
+ 
+  </select>
+   <select id="getRoomInfo">
+   SELECT
+      u.name,
+      r.title,
+      r.id,
+      r.desc1,
+      r.master_id,
+      r.hash_tag,
+      (SELECT COUNT(*) FROM helympic.Room_User WHERE room_id = r.id) uCount,
+      DATE_FORMAT(r.rDate, '%Y-%m-%d') rDate,
+      r.avatar
+      FROM
+      helympic.Room r
+      LEFT JOIN 
+      helympic.User u
+      ON 
+      r.master_id = u.id
+      where
+      r.id = #{roomId}
   </select>
   <select id="getMyRoom">
    SELECT
@@ -173,7 +214,10 @@
     u.name,
     u.id,
     u.avatar,
-    rv.video
+    rv.video,
+    rv.id as videoId,
+    (SELECT COUNT(*) FROM helympic.Room_Video_Like rvl WHERE rv.id = rvl.video_id) vCount,
+    (SELECT COUNT(*) FROM helympic.Room_Video_Like rvl WHERE rvl.user_id = #{userId} AND rv.id = rvl.video_id) checked
     FROM 
     helympic.User u
     LEFT JOIN
@@ -183,4 +227,101 @@
     WHERE
     rv.room_id = #{roomId}
   </select>
+    <select id="getRecordVideo">
+      SELECT 
+        u.name,
+        u.id,
+        u.avatar,
+        rv.video,
+        rv.id as videoId,
+        (SELECT COUNT(*) FROM helympic.Room_Video_Like rvl WHERE rv.id = rvl.video_id) vCount,
+        (SELECT COUNT(*) FROM helympic.Room_Video_Like rvl WHERE rvl.user_id = #{userId} AND rv.id = rvl.video_id) checked
+        FROM 
+        helympic.User u
+        LEFT JOIN
+        helympic.Room_Video rv
+        ON
+        u.id = rv.user_id
+        WHERE
+        rv.room_id = #{roomId}
+        order by vCount desc
+        limit 3
+  </select>
+    <select id="getMyVideo">
+     SELECT 
+        r.title,
+        r.avatar,
+        rv.video,
+         DATE_FORMAT(rv.rDate, '%Y-%m-%d') rDate,
+        (SELECT COUNT(*) FROM helympic.Room_Video_Like rvl WHERE rv.id = rvl.video_id) vCount
+        FROM 
+        helympic.User u
+        LEFT JOIN
+        helympic.Room_Video rv
+        ON
+        u.id = rv.user_id
+         LEFT JOIN
+        helympic.Room r
+        ON
+        rv.room_id = r.id
+        WHERE
+        u.id = #{userId}
+    </select>
+    <select id="getPopVideo">
+     SELECT 
+    u.name,
+    u.id,
+    u.avatar,
+    rv.video,
+    rv.id as videoId,
+    (SELECT COUNT(*) FROM helympic.Room_Video_Like rvl WHERE rv.id = rvl.video_id) vCount,
+    (SELECT COUNT(*) FROM helympic.Room_Video_Like rvl WHERE rvl.user_id = #{userId} AND rv.id = rvl.video_id) checked
+    FROM 
+    helympic.User u,helympic.Room_Video rv
+     where
+      rv.user_id = u.id 
+    order by vCount desc
+  </select>
+    <update id="editRoomInfo">
+    UPDATE 
+    Room SET 
+    title=#{title},
+    desc1=#{desc1},
+    hash_tag=#{hash_tag},
+    eDate=now() 
+    WHERE 
+    id=#{roomId}
+  </update>
+     <update id="editRoomAvatar">
+    UPDATE 
+    Room SET 
+    avatar=#{avatar},
+    eDate=now() 
+    WHERE 
+    id=#{roomId}
+  </update>
+  <select id="getSignRoom">
+  SELECT 
+    u.id,
+    u.name,
+    u.avatar,
+    DATE_FORMAT(NOW(), '%Y')- DATE_FORMAT(u.age, '%Y') +1 AS age
+    FROM 
+    helympic.Room r,helympic.Room_SignUp rs,helympic.User u
+    WHERE
+    r.id = rs.room_id
+    AND
+    rs.sign_id= u.id
+    AND
+    rs.room_id = #{roomId}
+  </select>
+    <delete id="delSignUser">
+      delete
+      FROM
+      Room_SignUp
+      where
+      room_id = #{roomId}
+      and
+      sign_id = #{userId}
+    </delete>
 </mapper>

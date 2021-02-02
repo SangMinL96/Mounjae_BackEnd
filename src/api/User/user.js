@@ -39,7 +39,6 @@ export default {
       try {
         const avatar = args.avatar;
         const result = await query('user', 'userAvatarEdit', {userId:request.user.id, avatar });
-        console.log(result)
         if (!result) {
           return {rslt: 'NG', data:""}
         } else {

@@ -16,7 +16,7 @@ export default {
       }
     },
     Query: {
-        getPopVideo: async (_, args, { request, query }) => {
+      getRoomVideo: async (_, args, { request, query }) => {
           try {
             const roomId = args.roomId;
             const result = await query("room", "getRoomVideo", {roomId, userId: request.user.id});

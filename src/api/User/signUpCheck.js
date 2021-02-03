@@ -4,6 +4,7 @@ import {AuthenticationError,ApolloError} from "apollo-server"
 export default {
     Mutation:{
         idCheck:async(_,args,{request,query})=>{
+            console.log("sdfsda")
             try{
                 const param=args.id;
                 const result =await query('user','idCheck',{id:param});

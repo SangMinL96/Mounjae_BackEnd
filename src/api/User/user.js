@@ -16,7 +16,7 @@ export default {
           pw: pwHash
         });
         if (!result[0]) {
-          return { id: '', token: '' };
+          return { id: '',name:"", token: '' };
         } else {
           const token = generateToken(result[0].id);
           return { id: result[0].id, name: result[0].name, token: token };
